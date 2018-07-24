@@ -1,0 +1,22 @@
+Package: tfhub
+Type: Package
+Title: Interface to 'TensorFlow' Hub
+Version: 0.1.0
+Authors@R: c(
+  person("JJ", "Allaire", role = c("aut", "cre"),
+         email = "jj@rstudio.com"),
+  person("RStudio", role = c("cph", "fnd")),  
+  person(family = "Google Inc.", role = c("cph"))
+  )
+Description: TensorFlow Hub is a library for the publication, discovery, and
+    consumption of reusable parts of machine learning models. A module is a 
+    self-contained piece of a TensorFlow graph, along with its weights and 
+    assets, that can be reused across different tasks in a process known as
+    transfer learning. Transfer learning train a model with a smaller dataset,
+    improve generalization, and speed up training.
+License: Apache License 2.0
+URL: https://github.com/rstudio/tfdatasets
+BugReports: https://github.com/rstudio/tfdatasets/issues
+SystemRequirements: TensorFlow >= 1.7 (https://www.tensorflow.org/)
+Encoding: UTF-8
+LazyData: true
