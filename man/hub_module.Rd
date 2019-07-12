@@ -4,7 +4,8 @@
 \alias{hub_module}
 \title{Re-usable TensorFlow module}
 \usage{
-hub_module(module_spec, trainable = FALSE, name = "module", tags = NULL)
+hub_module(module_spec, trainable = FALSE, name = "module",
+  tags = NULL)
 }
 \arguments{
 \item{module_spec}{Module spec loaded using [hub_load_module_spec()] or string
