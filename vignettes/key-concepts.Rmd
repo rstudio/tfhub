@@ -1,0 +1,172 @@
+---
+title: "Key concepts"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Key concepts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+type: docs
+repo: https://github.com/rstudio/tfhub
+menu:
+  main:
+    name: "Key Concepts"
+    identifier: "tfhub-key-concepts"
+    parent: "tfhub-top"
+    weight: 10
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  eval = FALSE
+)
+```
+
+## Using a Module
+
+### Instantiating a Module
+
+A TensorFlow Hub module is imported into a TensorFlow program by creating a Module object from a string with its URL or filesystem path, such as:
+
+```{r}
+library(tfhub)
+m <- hub_module("path/to/a/module_dir")
+```
+
+This adds the module's variables to the current TensorFlow graph. Running their 
+initializers will read their pre-trained values from disk. Likewise, tables and 
+other state is added to the graph.
+
+### Caching Modules
+
+When creating a module from a URL, the module content is downloaded and cached in the local system temporary directory. The location where modules are cached can be overridden using TFHUB_CACHE_DIR environment variable.
+
+For example, setting `TFHUB_CACHE_DIR` to `/my_module_cache`:
+
+```{r}
+Sys.setenv(TFHUB_CACHE_DIR = "/my_module_cache")
+```
+
+and then creating a module from a URL:
+
+```{r}
+m <- hub_module("https://tfhub.dev/google/progan-128/1")
+```
+
+results in downloading and unpacking the module into `/my_module_cache`.
+
+### Applying a Module
+
+Once instantiated, a module m can be called zero or more times like a Python function from tensor inputs to tensor outputs:
+
+```{r}
+y <- m(x)
+```
+
+Each such call adds operations to the current TensorFlow graph to compute `y` from `x`. If this involves variables with trained weights, these are shared between all applications.
+
+Modules can define multiple named signatures in order to allow being applied in more than one way (similar to how Python objects have methods). A module's documentation should describe the available signatures. The call above applies the signature named "default". Any signature can be selected by passing its name to the optional `signature=` argument.
+
+If a signature has multiple inputs, they must be passed as a dict, with the keys defined by the signature. Likewise, if a signature has multiple outputs, these can be retrieved as a dict by passing as_dict=True, under the keys defined by the signature. (The key `"default"` is for the single output returned if `as_dict=FALSE`) So the most general form of applying a Module looks like:
+
+```{r}
+outputs <- m(list(apples=x1, oranges=x2), signature="fruit_to_pet", as_dict=TRUE)
+y1 = outputs$cats
+y2 = outputs$dogs
+```
+
+A caller must supply all inputs defined by a signature, but there is no requirement to use all of a module's outputs. TensorFlow will run only those parts of the module that end up as dependencies of a target in `tf$Session$run()`. Indeed, module publishers may choose to provide various outputs for advanced uses (like activations of intermediate layers) along with the main outputs. Module consumers should handle additional outputs gracefully.
+
+## Creating a new Module
+
+### General approach
+
+To define a new module, a publisher calls `hub_create_module_spec()` with a function `module_fn`. This function constructs a graph representing the module's internal structure, using `tf$placeholder()` for inputs to be supplied by the caller. Then it defines signatures by calling `hub_add_signature(name, inputs, outputs)` one or more times.
+
+For example:
+
+```{r}
+library(keras)
+
+module_fn <- function() {
+  inputs <- tf$compat$v1$placeholder(dtype = tf$float32, shape = shape(NULL, 50))
+  layer1 <- layer_dense(inputs, 100)
+  layer2 <- layer_dense(layer1, 100)
+  outputs <- list(default = layer2, hidden_activations = layer1)
+  
+  # Add default signature.
+  hub_add_signature(inputs=inputs, outputs=outputs)
+}
+
+spec <- hub_create_module_spec(module_fn)
+```
+
+The result of `hub_create_module_spec()` can be used, instead of a path, to instantiate a module object within a particular TensorFlow graph. In such case, there is no checkpoint, and the module instance will use the variable initializers instead.
+
+Any module instance can be serialized to disk via its `export(path, session)` method. Exporting a module serializes its definition together with the current state of its variables in session into the passed path. This can be used when exporting a module for the first time, as well as when exporting a fine tuned module.
+
+For compatibility with TensorFlow Estimators, `hub_LatestModuleExporter` exports modules from the latest checkpoint, just like `tf$estimator$LatestExporter` exports the entire model from the latest checkpoint.
+
+Module publishers should implement a [common signature](https://www.tensorflow.org/hub/common_signatures/index) when possible, so that consumers can easily exchange modules and find the best one for their problem.
+
+### Real example
+
+Take a look at our text embedding module exporter for a real-world example of how to create a module from a common text embedding format.
+
+## Fine-Tuning
+
+Training the variables of an imported module together with those of the model around it is called fine-tuning. Fine-tuning can result in better quality, but adds new complications. We advise consumers to look into fine-tuning only after exploring simpler quality tweaks.
+
+### For consumers
+
+To enable fine-tuning, instantiate the module with `hub_module(..., trainable = TRUE)` to make its variables trainable and import TensorFlow's `REGULARIZATION_LOSSES`. If the module has multiple graph variants, make sure to pick the one appropriate for training. Usually, that's the one 
+with tags `{"train"}`.
+
+Choose a training regime that does not ruin the pre-trained weights, for example, 
+a lower learning rate than for training from scratch.
+
+### For publishers
+
+To make fine-tuning easier for consumers, please be mindful of the following:
+
+* Fine-tuning needs regularization. Your module is exported with the `REGULARIZATION_LOSSES` collection, which is what puts your choice of `layer_dense(..., kernel_regularizer=...)` etc. into what the consumer gets from `tf$losses$get_regularization_losses()`. Prefer this way of defining L1/L2 regularization losses.
+
+* In the publisher model, avoid defining L1/L2 regularization via the `l1_` and `l2_regularization_strength` parameters of `tf$train$FtrlOptimizer`, `tf$train$ProximalGradientDescentOptimizer`, and other proximal optimizers. These are not exported alongside the module, and setting regularization strengths globally may not be appropriate for the consumer. Except for L1 regularization in wide (i.e. sparse linear) or wide & deep models, it should be possible to use individual regularization losses instead.
+
+* If you use dropout, batch normalization, or similar training techniques, set dropout rate and other hyperparameters to values that make sense across many expected uses.
+
+## Hosting a Module
+
+TensorFlow Hub supports HTTP based distribution of modules. In particular the protocol allows to use the URL identifying the module both as the documentation of the module and the endpoint to fetch the module.
+
+### Protocol
+
+When a URL such as `https://example.com/module` is used to identify a module to load or instantiate, the module resolver will attempt to download a compressed tar ball from the URL after appending a query parameter `?tf-hub-format=compressed`.
+
+The query param is to be interpreted as a comma separated list of the module formats that the client is interested in. For now only the `"compressed"` format is defined.
+
+The compressed format indicates that the client expects a `tar.gz` archive with the module contents. The root of the archive is the root of the module directory and should contain a module e.g.:
+
+```
+# Create a compressed module from an exported module directory.
+$ tar -cz -f module.tar.gz --owner=0 --group=0 -C /tmp/export-module/ .
+
+# Inspect files inside a compressed module
+$ tar -tf module.tar.gz
+./
+./tfhub_module.pb
+./variables/
+./variables/variables.data-00000-of-00001
+./variables/variables.index
+./assets/
+./saved_model.pb
+```
+
+
+
+
+
+
+
+

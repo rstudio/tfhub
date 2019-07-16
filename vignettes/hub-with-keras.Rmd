@@ -5,12 +5,21 @@ vignette: >
   %\VignetteIndexEntry{TensorFlow Hub with Keras}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+type: docs
+repo: https://github.com/rstudio/tfhub
+menu:
+  main:
+    name: "TensorFlow Hub with Keras"
+    identifier: "tfhub-with-keras"
+    parent: "tfhub-top"
+    weight: 20
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>", 
+  eval = FALSE
 )
 ```
 
