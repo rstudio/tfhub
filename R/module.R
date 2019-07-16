@@ -1,7 +1,3 @@
-
-
-
-
 #' Re-usable TensorFlow module
 #'
 #' A Module represents a part of a TensorFlow graph that can be exported to disk (based on
@@ -43,6 +39,58 @@ hub_module <- function(module_spec, trainable = FALSE, name = "module", tags = N
 #' @export
 hub_load_module_spec <- function(path) {
   tfhub$load_module_spec(path.expand(path))
+}
+
+#' Adds a signature to the module definition.
+#'
+#' @param name Signature name as a string. If omitted, it is interpreted as
+#'   'default' and is the signature used when `Module.__call__` signature is
+#'   not specified.
+#' @param inputs A list from input name to Tensor or SparseTensor to feed when
+#'   applying the signature. If a single tensor is passed, it is interpreted as a
+#'   list with a single 'default' entry.
+#' @param outputs A list from output name to Tensor or SparseTensor to return from
+#'   applying the signature. If a single tensor is passed, it is interpreted as a
+#'   list with a single 'default' entry.
+#'
+#' @note This must be called within a module_fn that is defining a Module.
+#'
+#' @export
+hub_add_signature <- function(name = NULL, inputs = NULL, outputs = NULL) {
+  tfhub$add_signature(name, inputs, outputs)
+}
+
+#' Creates a ModuleSpec from a function that builds the module's graph.
+#'
+#' The module_fn is called on a new graph (not the current one) to build the graph
+#' of the module and define its signatures via `hub_add_signature()`.
+#'
+#' @note In anticipation of future TF-versions, `module_fn` is called on a graph
+#'   that uses resource variables by default. If you want old-style variables then
+#'   you can use with `tf$variable_scope("", use_resource=False)` in `module_fn`.
+#'
+#' @param module_fn a function to build a graph for the Module.
+#' @param saved_model_path Directory with the SavedModel to use.
+#' @param tags_and_args Optional list of tuples (tags, kwargs) of tags and keyword
+#'   args used to define graph variants. If omitted, it is interpreted as `[(set(), {})]`,
+#'   meaning module_fn is called once with no args.
+#' @param drop_collections: list of collection to drop.
+#'
+#' @seealso hub_add_signature
+#'
+#' @rdname hub_create_module_spec
+#' @export
+hub_create_module_spec <- function(module_fn, tags_and_args = NULL, drop_collections = NULL) {
+  tfhub$create_module_spec(module_fn, tags_and_args, drop_collections)
+}
+
+#' @rdname hub_create_module_spec
+#' @export
+hub_create_module_spec_from_savedmodel <- function(saved_model_path, drop_collections = NULL) {
+  tfhub$create_module_spec_from_saved_model(
+    saved_model_path = path.expand(saved_model_path),
+    drop_collections = drop_collections
+  )
 }
 
 

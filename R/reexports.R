@@ -15,4 +15,9 @@ NULL
 #' @export
 tensorflow::install_tensorflow
 
+#' @importFrom tensorflow tf
+#' @export
+tensorflow::tf
+
+
 
