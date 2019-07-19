@@ -10,17 +10,6 @@ hub_text_embedding_column(key, module_spec, trainable = FALSE)
 \item{key}{A string or
 \href{feature_column}{https://tensorflow.rstudio.com/tfestimators/articles/feature_columns.html}
  identifying the text feature.}
-
-\item{module_spec}{Module spec loaded using [hub_load_module_spec()] or string
-describing the location of a module. There are several supported path encoding
-schemes: a) URL location specifying an archived module (e.g.
-http://domain/module.tgz) b) Any filesystem location of a module directory (e.g.
-/module_dir for a local filesystem). All filesystems implementations provided by
-Tensorflow are supported.}
-
-\item{trainable}{Whether the Module is trainable. If `FALSE`, no variables are added to
-TRAINABLE_VARIABLES collection, and no tensors are added to REGULARIZATION_LOSSES
-collection.}
 }
 \description{
 This feature column can be used on an input feature whose values are strings of

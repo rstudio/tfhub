@@ -10,13 +10,6 @@ hub_image_embedding_column(key, module_spec)
 \item{key}{A string or
 \href{feature_column}{https://tensorflow.rstudio.com/tfestimators/articles/feature_columns.html}
  identifying the input image data.}
-
-\item{module_spec}{Module spec loaded using [hub_load_module_spec()] or string
-describing the location of a module. There are several supported path encoding
-schemes: a) URL location specifying an archived module (e.g.
-http://domain/module.tgz) b) Any filesystem location of a module directory (e.g.
-/module_dir for a local filesystem). All filesystems implementations provided by
-Tensorflow are supported.}
 }
 \description{
 Module to construct a dense 1-D representation from the pixels of images.
