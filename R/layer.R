@@ -33,5 +33,5 @@
 #'
 #' @export
 layer_hub <- function(handle, trainable = FALSE, arguments = NULL, ...) {
-  hub$KerasLayer(handle, trainable, arguments, ...)
+  tfhub$KerasLayer(handle, trainable, arguments, ...)
 }
