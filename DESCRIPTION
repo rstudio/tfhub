@@ -26,11 +26,12 @@ Imports:
     tensorflow (>= 1.8.0.9006),
     magrittr
 Suggests:
-    testthat,
+    testthat (>= 2.1.0),
     knitr,
     tfestimators,
     keras,
-    rmarkdown
+    rmarkdown,
+    callr
 Remotes:
     rstudio/reticulate,
     rstudio/tensorflow
