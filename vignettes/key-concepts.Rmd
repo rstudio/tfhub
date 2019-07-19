@@ -31,12 +31,10 @@ A TensorFlow Hub module is imported into a TensorFlow program by creating a Modu
 
 ```{r}
 library(tfhub)
-m <- hub_module("path/to/a/module_dir")
+m <- hub_load("path/to/a/module_dir")
 ```
 
-This adds the module's variables to the current TensorFlow graph. Running their 
-initializers will read their pre-trained values from disk. Likewise, tables and 
-other state is added to the graph.
+This adds the module's variables to the current TensorFlow graph. 
 
 ### Caching Modules
 
@@ -51,7 +49,7 @@ Sys.setenv(TFHUB_CACHE_DIR = "/my_module_cache")
 and then creating a module from a URL:
 
 ```{r}
-m <- hub_module("https://tfhub.dev/google/progan-128/1")
+m <- hub_load("https://tfhub.dev/google/progan-128/1")
 ```
 
 results in downloading and unpacking the module into `/my_module_cache`.
@@ -76,43 +74,67 @@ y1 = outputs$cats
 y2 = outputs$dogs
 ```
 
-A caller must supply all inputs defined by a signature, but there is no requirement to use all of a module's outputs. TensorFlow will run only those parts of the module that end up as dependencies of a target in `tf$Session$run()`. Indeed, module publishers may choose to provide various outputs for advanced uses (like activations of intermediate layers) along with the main outputs. Module consumers should handle additional outputs gracefully.
+A caller must supply all inputs defined by a signature, but there is no requirement to use all of a module's outputs. Module consumers should handle additional outputs gracefully.
 
 ## Creating a new Module
 
 ### General approach
 
-To define a new module, a publisher calls `hub_create_module_spec()` with a function `module_fn`. This function constructs a graph representing the module's internal structure, using `tf$placeholder()` for inputs to be supplied by the caller. Then it defines signatures by calling `hub_add_signature(name, inputs, outputs)` one or more times.
+A Hub Module is simply a TensorFlow graph in the SavedModel format. In order
+to create a Module you can run the `export_savedmodel` function with any
+TensorFlow object.
 
 For example:
 
 ```{r}
 library(keras)
 
-module_fn <- function() {
-  inputs <- tf$compat$v1$placeholder(dtype = tf$float32, shape = shape(NULL, 50))
-  layer1 <- layer_dense(inputs, 100)
-  layer2 <- layer_dense(layer1, 100)
-  outputs <- list(default = layer2, hidden_activations = layer1)
-  
-  # Add default signature.
-  hub_add_signature(inputs=inputs, outputs=outputs)
-}
+mnist <- dataset_mnist()
 
-spec <- hub_create_module_spec(module_fn)
+input <- layer_input(shape(28,28), dtype = "int32")
+
+output <- input %>% 
+  layer_flatten() %>% 
+  layer_lambda(tensorflow::tf_function(function(x) tf$cast(x, tf$float32)/255)) %>% 
+  layer_dense(units = 10, activation = "softmax")
+
+model <- keras_model(input, output)
+
+model %>% 
+  compile(
+    loss = "sparse_categorical_crossentropy",
+    optimizer = "adam",
+    metrics = "acc"
+  )
+
+model %>% 
+  fit(x = mnist$train$x, y = mnist$train$y, validation_split = 0.2, epochs =1 )
+
+export_savedmodel(model, "my_module/", remove_learning_phase = FALSE)
 ```
 
-The result of `hub_create_module_spec()` can be used, instead of a path, to instantiate a module object within a particular TensorFlow graph. In such case, there is no checkpoint, and the module instance will use the variable initializers instead.
+After exporting the model to the SavedModel format you can load it using `hub_load`,
+and use it for predictions for example:
 
-Any module instance can be serialized to disk via its `export(path, session)` method. Exporting a module serializes its definition together with the current state of its variables in session into the passed path. This can be used when exporting a module for the first time, as well as when exporting a fine tuned module.
+```{r}
+module <- hub_load("my_module/")
 
-For compatibility with TensorFlow Estimators, `hub_LatestModuleExporter` exports modules from the latest checkpoint, just like `tf$estimator$LatestExporter` exports the entire model from the latest checkpoint.
+predictions <- module(mnist$test$x) %>% 
+  tf$argmax(axis = 1L) 
+
+mean(as.integer(predictions) == mnist$test$y)
+```
+
+Exporting a module serializes its definition together with the current state of 
+its variables in session into the passed path. This can be used when exporting a 
+module for the first time, as well as when exporting a fine tuned module.
 
 Module publishers should implement a [common signature](https://www.tensorflow.org/hub/common_signatures/index) when possible, so that consumers can easily exchange modules and find the best one for their problem.
 
 ### Real example
 
-Take a look at our text embedding module exporter for a real-world example of how to create a module from a common text embedding format.
+Take a look at our text embedding module exporter for a real-world example of how 
+to create a module from a common text embedding format.
 
 ## Fine-Tuning
 
