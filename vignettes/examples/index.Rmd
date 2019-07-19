@@ -1,9 +1,0 @@
----
-title: "TensorFlow Hub Examples"
----
-
-| Example  | Description   |
-|----------------------|------------------------------------|
-| [text_classification](text_classification.html) | Uses pre-trained word embeddings to classify toxic comments in the Toxic Comment Classification Challenge dataset. |
-| [image_classification](image_classification.html) | Uses pre-trained models to classify images in the CIFAR-10 dataset. |
-
