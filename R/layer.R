@@ -32,6 +32,15 @@
 #'   this layer.
 #'
 #' @export
-layer_hub <- function(handle, trainable = FALSE, arguments = NULL, ...) {
-  tfhub$KerasLayer(handle, trainable, arguments, ...)
+layer_hub <- function(object, handle, trainable = FALSE, arguments = NULL, ...) {
+  keras::create_layer(
+    tfhub$KerasLayer,
+    object,
+    list(
+      handle = handle,
+      trainable = trainable,
+      arguments = arguments,
+      ...
+    )
+  )
 }

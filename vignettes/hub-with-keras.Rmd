@@ -46,7 +46,7 @@ Any TensorFlow 2 compatible image classifier URL from tfhub.dev will work here.
 
 ```{r}
 classifier_url <- "https://tfhub.dev/google/tf2-preview/mobilenet_v2/classification/2" 
-mobilenet_layer <- layer_hub(classifier_url)
+mobilenet_layer <- layer_hub(handle = classifier_url)
 ```
 
 We can then create our Keras model:
@@ -132,7 +132,7 @@ Any Tensorflow 2 compatible image feature vector URL from tfhub.dev will work he
 
 ```{r}
 feature_extractor_url <- "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/2"
-feature_extractor_layer <- layer_hub(feature_extractor_url)
+feature_extractor_layer <- layer_hub(handle = feature_extractor_url)
 ```
 
 ### Attach a classification head
