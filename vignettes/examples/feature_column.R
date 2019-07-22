@@ -1,6 +1,8 @@
 #' In this example we will use the PetFinder dataset to demonstrate the
 #' feature_spec functionality with TensorFlow Hub.
 
+# TODO wait for https://github.com/tensorflow/hub/issues/333
+
 library(keras)
 library(tfhub)
 library(tfdatasets)
