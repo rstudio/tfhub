@@ -7,9 +7,15 @@
 hub_text_embedding_column(key, module_spec, trainable = FALSE)
 }
 \arguments{
-\item{key}{A string or
-\href{feature_column}{https://tensorflow.rstudio.com/tfestimators/articles/feature_columns.html}
- identifying the text feature.}
+\item{key}{A string or [feature_column](https://tensorflow.rstudio.com/tfestimators/articles/feature_columns.html)
+identifying the text feature.}
+
+\item{module_spec}{A string handle or a _ModuleSpec identifying the module.}
+
+\item{trainable}{Whether or not the Module is trainable. `FALSE` by default,
+meaning the pre-trained weights are frozen. This is different from the ordinary
+`tf.feature_column.embedding_column()`, but that one is intended for training
+from scratch.}
 }
 \description{
 This feature column can be used on an input feature whose values are strings of

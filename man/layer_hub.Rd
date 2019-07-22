@@ -4,7 +4,7 @@
 \alias{layer_hub}
 \title{Hub Layer}
 \usage{
-layer_hub(handle, trainable = FALSE, arguments = NULL, ...)
+layer_hub(object, handle, trainable = FALSE, arguments = NULL, ...)
 }
 \arguments{
 \item{handle}{a callable object (subject to the conventions above), or a string

@@ -7,9 +7,10 @@
 hub_image_embedding_column(key, module_spec)
 }
 \arguments{
-\item{key}{A string or
-\href{feature_column}{https://tensorflow.rstudio.com/tfestimators/articles/feature_columns.html}
- identifying the input image data.}
+\item{key}{A string or [feature_column](https://tensorflow.rstudio.com/tfestimators/articles/feature_columns.html)
+identifying the text feature.}
+
+\item{module_spec}{A string handle or a _ModuleSpec identifying the module.}
 }
 \description{
 Module to construct a dense 1-D representation from the pixels of images.
