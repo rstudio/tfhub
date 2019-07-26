@@ -18,6 +18,8 @@ the Keras config of this Layer.}
 \item{arguments}{optionally, a list with additional keyword arguments passed to
 the callable. These must be JSON-serializable to save the Keras config of
 this layer.}
+
+\item{...}{Other arguments that are passed to the TensorFlow Hub module.}
 }
 \description{
 Wraps a Hub module (or a similar callable) for TF2 as a Keras Layer.

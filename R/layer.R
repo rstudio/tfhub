@@ -25,12 +25,11 @@
 #' @param handle a callable object (subject to the conventions above), or a string
 #'   for which `hub_load()` returns such a callable. A string is required to save
 #'   the Keras config of this Layer.
-#'
 #' @param trainable Boolean controlling whether this layer is trainable.
-#'
 #' @param arguments optionally, a list with additional keyword arguments passed to
 #'   the callable. These must be JSON-serializable to save the Keras config of
 #'   this layer.
+#' @param ... Other arguments that are passed to the TensorFlow Hub module.
 #'
 #' @export
 layer_hub <- function(object, handle, trainable = FALSE, arguments = NULL, ...) {
