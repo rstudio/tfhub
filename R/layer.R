@@ -21,6 +21,7 @@
 #' a list of callables to be added as losses of this Keras Layer when the layer is
 #' trainable. Each one must accept zero arguments and return a scalar tensor.
 #'
+#' @param object Model or layer object
 #' @param handle a callable object (subject to the conventions above), or a string
 #'   for which `hub_load()` returns such a callable. A string is required to save
 #'   the Keras config of this Layer.

@@ -7,6 +7,8 @@
 layer_hub(object, handle, trainable = FALSE, arguments = NULL, ...)
 }
 \arguments{
+\item{object}{Model or layer object}
+
 \item{handle}{a callable object (subject to the conventions above), or a string
 for which `hub_load()` returns such a callable. A string is required to save
 the Keras config of this Layer.}
