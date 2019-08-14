@@ -34,5 +34,6 @@ Suggests:
     callr
 Remotes:
     rstudio/reticulate,
-    rstudio/tensorflow
+    rstudio/tensorflow,
+    rstudio/keras
 VignetteBuilder: knitr
