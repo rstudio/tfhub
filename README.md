@@ -28,6 +28,14 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("rstudio/tfhub")
 ```
 
+After installing the tfhub package you need to install the TensorFlow Hub python 
+module:
+
+``` r
+library(tfhub)
+install_tfhub()
+```
+
 ## Integrated with Keras
 
 The easiest way to get started with tfhub is using `layer_hub`. A Keras layer that

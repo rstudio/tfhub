@@ -24,7 +24,8 @@ RoxygenNote: 6.1.1
 Imports:
     reticulate (>= 1.9.0.9002), 
     tensorflow (>= 1.8.0.9006),
-    magrittr
+    magrittr,
+    rstudioapi (>= 0.7)
 Suggests:
     testthat (>= 2.1.0),
     knitr,
