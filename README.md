@@ -1,6 +1,7 @@
 # tfhub
 
 <!-- badges: start -->
+[![Travis-CI Build Status](https://travis-ci.org/rstudio/tfhub.svg?branch=master)](https://travis-ci.org/rstudio/tfhub) 
 <!-- badges: end -->
 
 The tfhub package provides R wrappers to [TensorFlow Hub](https://www.tensorflow.org/hub).
