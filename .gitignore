@@ -3,4 +3,6 @@
 .RData
 .Ruserdata
 examples/text_classification/aclimdb
-
+inst/doc
+.DS_Store
+my_module

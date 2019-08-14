@@ -3,3 +3,5 @@
 ^examples$
 
 
+^\.travis\.yml$
+^README\.Rmd$

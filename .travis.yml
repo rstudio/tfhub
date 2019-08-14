@@ -1,0 +1,19 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+cache: packages
+
+
+
+before_script:
+  - sudo apt-get update
+  - sudo apt-get install python3
+  - pip install --upgrade --ignore-installed --user travis virtualenv
+  - R CMD INSTALL .
+  - R -e 'tensorflow::install_tensorflow(version = Sys.getenv("TENSORFLOW_VERSION"))'
+  - R -e 'tensorflow::tf_config()'
+
+env:
+  - TENSORFLOW_VERSION="2.0.0b1"
+  - TENSORFLOW_VERSION="1.14.0"
+  - TENSORFLOW_VERSION="nightly"
