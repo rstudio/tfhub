@@ -36,7 +36,22 @@ library(tfhub)
 install_tfhub()
 ```
 
-## Integrated with Keras
+## Loading modules
+
+Modules can be loaded from URL's and local paths using `hub_load()`
+
+``` r
+module <- hub_load("https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/2")
+```
+
+Module's behave like functions and can be called with Tensors eg:
+
+``` r
+input <- tf$random$uniform(shape = shape(1,224,224,3), minval = 0, maxval = 1)
+output <- module(input)
+```
+
+## Using with Keras
 
 The easiest way to get started with tfhub is using `layer_hub`. A Keras layer that
 loads a TensorFlow Hub module and prepares it for using with your model.
@@ -77,7 +92,7 @@ model %>%
   )
 ```
 
-## Integrated with tfdatasets
+## Using with tfdatasets
 
 tfhub can also be used with tfdatasets since it provides implementations of `feature_columns`:
 

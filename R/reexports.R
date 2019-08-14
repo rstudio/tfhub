@@ -19,5 +19,7 @@ tensorflow::install_tensorflow
 #' @export
 tensorflow::tf
 
-
+#' @importFrom tensorflow shape
+#' @export
+tensorflow::shape
 
