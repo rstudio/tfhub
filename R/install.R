@@ -4,6 +4,7 @@
 #' This function is used to install the TensorFlow Hub python module.
 #'
 #' @param version version of TensorFlow Hub to be installed.
+#' @param ... other arguments passed to [reticulate::py_install()].
 #' @param restart_session Restart R session after installing (note this will
 #'  only occur within RStudio).
 #'

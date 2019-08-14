@@ -9,6 +9,8 @@ install_tfhub(version = "0.5.0", ..., restart_session = TRUE)
 \arguments{
 \item{version}{version of TensorFlow Hub to be installed.}
 
+\item{...}{other arguments passed to [reticulate::py_install()].}
+
 \item{restart_session}{Restart R session after installing (note this will
 only occur within RStudio).}
 }
