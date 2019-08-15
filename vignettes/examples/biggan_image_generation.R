@@ -2,6 +2,9 @@
 #'
 #' See [this jupyter notebook](https://github.com/tensorflow/hub/blob/master/examples/colab/biggan_generation_with_tf_hub.ipynb) for more info.
 #'
+#' This example currently requires TensorFlow 2.0 Nightly preview.
+#' It can be installed with
+#' reticulate::py_install("tf-nightly-2.0-preview", pip = TRUE)
 #'
 
 # Setup -------------------------------------------------------------------
@@ -36,7 +39,7 @@ samples <- module$signatures[["default"]](y=y, z=z, truncation=truncation)
 create_plot <- function(samples, ncol) {
 
   images <- samples[[1]] %>%
-    plyr::alply(1, function(x) {
+    apply(1, function(x) {
       magick::image_read(as.raster((as.array(x) + 2)/4))
     }) %>%
     do.call(c, .)
