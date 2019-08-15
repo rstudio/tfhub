@@ -16,7 +16,7 @@ install_tfhub <- function(version = "0.5.0", ..., restart_session = TRUE) {
   else
     module_string <- paste0("tensorflow_hub==", version)
 
-  reticulate::py_install(packages = module_string, ...)
+  reticulate::py_install(packages = module_string, pip = TRUE, ...)
 
   if (restart_session && rstudioapi::hasFun("restartSession"))
     rstudioapi::restartSession()
