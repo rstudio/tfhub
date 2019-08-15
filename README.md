@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Travis-CI Build Status](https://travis-ci.org/rstudio/tfhub.svg?branch=master)](https://travis-ci.org/rstudio/tfhub) 
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/dfalbel/tfhub?branch=master&svg=true)](https://ci.appveyor.com/project/dfalbel/tfhub)
 <!-- badges: end -->
 
 The tfhub package provides R wrappers to [TensorFlow Hub](https://www.tensorflow.org/hub).
