@@ -15,16 +15,17 @@ cache:
 
 environment:
   NOT_CRAN: true
-  # env vars that may need to be set, at least temporarily, from time to time
-  # see https://github.com/krlmlr/r-appveyor#readme for details
   USE_RTOOLS: true
-  # R_REMOTES_STANDALONE: true
+  matrix:
+    - TF_VERSION: 1.14.0
+    - TF_VERSION: 2.0.0b1
+    - TF_VERSION: nightly
 
 # Adapt as necessary starting from here
 
 build_script:
   - travis-tool.sh install_deps
-  - R -e "tensorflow::install_tensorflow(version='1.14.0', restart_session = FALSE)"
+  - R -e "tensorflow::install_tensorflow(version=Sys.getenv('TF_VERSION'), restart_session = FALSE)"
 
 test_script:
   - travis-tool.sh run_tests
