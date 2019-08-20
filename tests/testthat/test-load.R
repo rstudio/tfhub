@@ -7,6 +7,8 @@ test_succeeds("Can load module from URL", {
 
 test_succeeds("Can load module from file path", {
 
+  skip("Currently skipping due to bug exporting models on Windows")
+
   library(keras)
 
   input <- layer_input(shape = shape(1))
