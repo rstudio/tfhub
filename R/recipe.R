@@ -63,6 +63,7 @@ step_pretrained_text_embedding_new <- function(terms, role, trained, vars,
     )
 }
 
+#' @export
 prep.step_pretrained_text_embedding <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(terms = x$terms, info = info)
 
@@ -94,6 +95,7 @@ get_embedding <- function(column, module) {
   out
 }
 
+#' @export
 bake.step_pretrained_text_embedding <- function(object, new_data, ...) {
 
   module <- do.call(hub_load, append(list(handle = object$handle), object$args))
