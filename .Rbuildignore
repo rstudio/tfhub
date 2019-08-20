@@ -6,3 +6,6 @@
 ^\.travis\.yml$
 ^README\.Rmd$
 ^appveyor\.yml$
+
+^.*saved_model.pb
+^.*train.csv.zip
