@@ -6,3 +6,4 @@ examples/text_classification/aclimdb
 inst/doc
 .DS_Store
 my_module
+train.csv.zip
