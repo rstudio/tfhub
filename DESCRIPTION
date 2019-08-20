@@ -32,7 +32,9 @@ Suggests:
     tfestimators,
     keras,
     rmarkdown,
-    callr
+    callr,
+    recipes,
+    tibble
 Remotes:
     rstudio/reticulate,
     rstudio/tensorflow,

@@ -104,6 +104,12 @@ tfhub can also be used with tfdatasets since it provides implementations of `fea
 
 You can find a working example [here](https://github.com/rstudio/tfhub/tree/master/vignettes/examples/feature_column.R).
 
+## Using with `recipes`
+
+tfhub adds a `step_pretrained_text_embedding` that can be used with the [recipes](https://github.com/tidymodels/recipes) package.
+
+An example can be found [here](https://github.com/rstudio/tfhub/tree/master/vignettes/examples/recipes.R).
+
 ## tfhub.dev
 
 [tfhub.dev](https://tfhub.dev) is a gallery of pre-trained model ready to be used with TensorFlow Hub.
