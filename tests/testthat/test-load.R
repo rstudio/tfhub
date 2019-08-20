@@ -7,6 +7,8 @@ test_succeeds("Can load module from URL", {
 
 test_succeeds("Can load module from file path", {
 
+  skip("Currently skipping due to bug exporting models on Windows")
+
   library(keras)
 
   input <- layer_input(shape = shape(1))
@@ -16,6 +18,7 @@ test_succeeds("Can load module from file path", {
   model <- keras_model(list(input, input2), output)
 
   tmp <- tempfile()
+  dir.create(tmp)
 
   export_savedmodel(model, tmp, remove_learning_phase = FALSE)
 
