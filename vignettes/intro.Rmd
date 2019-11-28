@@ -13,6 +13,8 @@ menu:
     identifier: "tfhub-overview"
     parent: "tfhub-basics-top"
     weight: 10
+alias:
+  - /guide/tfhub
 ---
     
 The tfhub package provides R wrappers to [TensorFlow Hub](https://www.tensorflow.org/hub).
