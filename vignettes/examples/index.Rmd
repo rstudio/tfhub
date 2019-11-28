@@ -1,0 +1,17 @@
+---
+title: "TensorFlow Hub Examples"
+type: docs
+menu:
+  main:
+    name: "Examples"
+    parent: "guide-top"
+    weight: 53
+    identifier: "tfhub-examples"
+---
+
+| Example  | Description   |
+|----------------------|------------------------------------|
+| [text_classification](/guide/tfhub/examples/text_classification) | In this example we use tfhub to obtain pre-trained word-embeddings and we use the word vectors to identify and classify toxic comments. |
+| [recipes](/guide/tfhub/examples/recipes) | In this example we use tfhub and recipes to obtain pre-trained sentence embeddings. We then firt a logistic regression model. |
+| [feature_column](/guide/tfhub/examples/feature_column) | In this example we will use the PetFinder dataset to demonstrate the feature_spec functionality with TensorFlow Hub. |
+| [biggan_image_generation](/guide/tfhub/examples/biggan_image_generation) | This example is a demo of BigGAN image generators available on TF Hub. |
