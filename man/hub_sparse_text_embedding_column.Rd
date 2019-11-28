@@ -4,8 +4,13 @@
 \alias{hub_sparse_text_embedding_column}
 \title{Module to construct dense representations from sparse text features.}
 \usage{
-hub_sparse_text_embedding_column(key, module_spec, combiner, default_value,
-  trainable = FALSE)
+hub_sparse_text_embedding_column(
+  key,
+  module_spec,
+  combiner,
+  default_value,
+  trainable = FALSE
+)
 }
 \arguments{
 \item{key}{A string or [feature_column](https://tensorflow.rstudio.com/tfestimators/articles/feature_columns.html)

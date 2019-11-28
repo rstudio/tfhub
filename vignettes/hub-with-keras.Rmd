@@ -91,7 +91,7 @@ For this example you will use the TensorFlow flowers dataset:
 
 ```{r}
 data_root <- pins::pin("https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz", "flower_photos")
-data_root <- fs::path_dir(fs::path_dir(data_root[1])) # go down 2 levels
+data_root <- fs::path_dir(fs::path_dir(data_root[100])) # go down 2 levels
 ```
 
 The simplest way to load this data into our model is using `image_data_generator`
