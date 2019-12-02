@@ -4,9 +4,16 @@
 \alias{step_pretrained_text_embedding}
 \title{Pretrained text-emebeddings}
 \usage{
-step_pretrained_text_embedding(recipe, ..., role = "predictor",
-  trained = FALSE, handle, args = NULL, skip = FALSE,
-  id = recipes::rand_id("pretrained_text_embedding"))
+step_pretrained_text_embedding(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  handle,
+  args = NULL,
+  skip = FALSE,
+  id = recipes::rand_id("pretrained_text_embedding")
+)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the

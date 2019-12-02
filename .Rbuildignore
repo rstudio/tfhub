@@ -9,3 +9,5 @@
 
 ^.*saved_model.pb
 ^.*train.csv.zip
+^doc$
+^Meta$
