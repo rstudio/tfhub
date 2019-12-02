@@ -1,0 +1,68 @@
+on: [push, pull_request]
+
+name: R-CMD-check
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { os: windows-latest, tf: '2.0.0', 'tfhub': '0.7.0'}
+        - { os: macOS-latest, tf: '2.0.0', tfhub: '0.7.0'}
+        - { os: ubuntu-latest, tf: '2.0.0', tfhub: '0.7.0'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      TF_VERSION: matrix.config.tf
+      TFHUB_VERSION: matrix.config.tfhub
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - uses: r-lib/actions/setup-r@master
+      
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      
+      - uses: r-lib/actions/setup-pandoc@master
+
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('DESCRIPTION') }}
+
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          Rscript -e "install.packages('remotes')" -e "remotes::install_github('r-hub/sysreqs')"
+          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          sudo -s eval "$sysreqs"
+      
+      - name: Install dependencies
+        run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
+        
+      - name: Install TensorFlow
+        run: |
+          R CMD INSTALL .
+          Rscript -e 'tensorflow::install_tensorflow(version = Sys.getenv("TF_VERSION"))'
+          Rscript -e 'tfhub::install_tfhub(version = Sys.getenv("TFHUB_VERSION"))'
+
+      - name: Check
+        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check
