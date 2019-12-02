@@ -18,8 +18,8 @@ jobs:
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      TF_VERSION: matrix.config.tf
-      TFHUB_VERSION: matrix.config.tfhub
+      TF_VERSION: ${{ matrix.config.tf }}
+      TFHUB_VERSION: ${{ matrix.config.tfhub }}
 
     steps:
       - uses: actions/checkout@v1
