@@ -11,7 +11,7 @@ menu:
   main:
     name: "Key Concepts"
     identifier: "tfhub-key-concepts"
-    parent: "tfhub-top"
+    parent: "tfhub-key-top"
     weight: 10
 ---
 
@@ -110,7 +110,7 @@ model %>%
 model %>% 
   fit(x = mnist$train$x, y = mnist$train$y, validation_split = 0.2, epochs =1 )
 
-export_savedmodel(model, "my_module/", remove_learning_phase = FALSE)
+save_model_tf(model, "my_module/", include_optimizer = FALSE)
 ```
 
 After exporting the model to the SavedModel format you can load it using `hub_load`,
@@ -130,11 +130,6 @@ its variables in session into the passed path. This can be used when exporting a
 module for the first time, as well as when exporting a fine tuned module.
 
 Module publishers should implement a [common signature](https://www.tensorflow.org/hub/common_signatures/index) when possible, so that consumers can easily exchange modules and find the best one for their problem.
-
-### Real example
-
-Take a look at our text embedding module exporter for a real-world example of how 
-to create a module from a common text embedding format.
 
 ## Fine-Tuning
 

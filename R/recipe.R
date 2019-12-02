@@ -20,6 +20,7 @@
 #' @param args other arguments passed to [hub_load()].
 #' @param id A character string that is unique to this step to identify it.
 #'
+#'
 #' @export
 step_pretrained_text_embedding <- function(
   recipe, ...,
@@ -63,8 +64,17 @@ step_pretrained_text_embedding_new <- function(terms, role, trained, vars,
     )
 }
 
+#' Prep method for step_pretrained_text_embedding
+#'
+#' @param x object
+#' @param info variables state
+#' @param training wether or not it's training
+#'
+#' @inheritParams step_pretrained_text_embedding
+#'
+#' @export
 prep.step_pretrained_text_embedding <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(terms = x$terms, info = info)
+  col_names <- recipes::terms_select(terms = x$terms, info = info)
 
   step_pretrained_text_embedding_new(
     terms = x$terms,
@@ -94,6 +104,14 @@ get_embedding <- function(column, module) {
   out
 }
 
+#' Bake method for step_pretrained_text_embedding
+#'
+#' @param object object
+#' @param new_data new data to apply transformations
+#'
+#' @inheritParams step_pretrained_text_embedding
+#'
+#' @export
 bake.step_pretrained_text_embedding <- function(object, new_data, ...) {
 
   module <- do.call(hub_load, append(list(handle = object$handle), object$args))

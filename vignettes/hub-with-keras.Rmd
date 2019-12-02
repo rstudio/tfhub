@@ -9,9 +9,9 @@ type: docs
 repo: https://github.com/rstudio/tfhub
 menu:
   main:
-    name: "TensorFlow Hub with Keras"
+    name: "Using with Keras"
     identifier: "tfhub-with-keras"
-    parent: "tfhub-top"
+    parent: "tfhub-basics-top"
     weight: 20
 ---
 
@@ -19,7 +19,7 @@ menu:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>", 
-  eval = FALSE
+  eval = TRUE
 )
 ```
 
@@ -90,14 +90,8 @@ classes in our dataset.
 For this example you will use the TensorFlow flowers dataset:
 
 ```{r}
-data_root <- get_file(
-  fname = "flower_photos.tgz",
-  origin = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
-  )
-if (!dir.exists("flower_photos")) {
-  untar(data_root)  
-}
-data_root <- "flower_photos"
+data_root <- pins::pin("https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz", "flower_photos")
+data_root <- fs::path_dir(fs::path_dir(data_root[100])) # go down 2 levels
 ```
 
 The simplest way to load this data into our model is using `image_data_generator`
@@ -178,7 +172,7 @@ model %>%
 You can then export your model with:
 
 ```{r}
-model_to_saved_model(model, "model")
+save_model_tf(model, "model")
 ```
 
 You can also reload the `model_from_saved_model` function. Note that you need to
@@ -186,10 +180,7 @@ pass the `custom_object` with the definition of the KerasLayer since it/s not
 a default Keras layer.
 
 ```{r}
-reloaded_model <- model_from_saved_model(
-  "model", 
-  custom_objects = list(KerasLayer = layer_hub)
-)
+reloaded_model <- load_model_tf("model")
 ```
 
 We can verify that the predictions of both the trained model and the reloaded
