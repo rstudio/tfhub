@@ -51,7 +51,7 @@ jobs:
         run: |
           Rscript -e 'reticulate::install_miniconda()'
           Rscript -e 'remotes::install_local()'
-          Rscript -e 'reticulate::py_install(c("h5py", "pyyaml", "requests", "Pillow", "scipy"))'
+          Rscript -e 'reticulate::py_install(c("h5py", "pyyaml", "requests", "Pillow", "scipy"), pip = TRUE)'
           Rscript -e 'tensorflow::install_tensorflow(version = Sys.getenv("TF_VERSION"))'
           Rscript -e 'tfhub::install_tfhub(version = Sys.getenv("TFHUB_VERSION"))'
 
