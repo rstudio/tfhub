@@ -20,6 +20,7 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       TF_VERSION: ${{ matrix.config.tf }}
       TFHUB_VERSION: ${{ matrix.config.tfhub }}
+      PIP_NO_WARN_SCRIPT_LOCATION: false
 
     steps:
       - uses: actions/checkout@v1
