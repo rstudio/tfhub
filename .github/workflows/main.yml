@@ -6,7 +6,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (TF ${{ matrix.config.tf }}) (TFHUB ${{ matrix.config.tfhub }})
 
     strategy:
       fail-fast: false
