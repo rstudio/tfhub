@@ -6,26 +6,28 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (TF ${{ matrix.config.tf }}) (TFHUB ${{ matrix.config.tfhub }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, tf: '2.0.0', 'tfhub': '0.7.0'}
+        - { os: windows-latest, tf: '2.0.0', tfhub: '0.7.0'}
         - { os: macOS-latest, tf: '2.0.0', tfhub: '0.7.0'}
         - { os: ubuntu-latest, tf: '2.0.0', tfhub: '0.7.0'}
-
+        - { os: ubuntu-latest, tf: '2.0.0', tfhub: 'nightly'}
+        - { os: ubuntu-latest, tf: 'nightly', tfhub: 'nightly'}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       TF_VERSION: ${{ matrix.config.tf }}
       TFHUB_VERSION: ${{ matrix.config.tfhub }}
+      PIP_NO_WARN_SCRIPT_LOCATION: false
 
     steps:
       - uses: actions/checkout@v1
-      
+
       - uses: r-lib/actions/setup-r@master
-      
+
       - uses: r-lib/actions/setup-pandoc@master
 
       - name: Cache R packages
@@ -43,17 +45,18 @@ jobs:
           Rscript -e "install.packages('remotes')" -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-      
+
       - name: Install dependencies
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
-        
+
       - name: Install TensorFlow
         run: |
           Rscript -e "reticulate::install_miniconda()"
           Rscript -e "remotes::install_local()"
+          Rscript -e "reticulate::conda_create('r-reticulate', packages = 'python==3.6.9')"
           Rscript -e "tensorflow::install_tensorflow(version = Sys.getenv('TF_VERSION'))"
           Rscript -e "tfhub::install_tfhub(version = Sys.getenv('TFHUB_VERSION'))"
-          Rscript -e "reticulate::py_install(c('h5py', 'pyyaml', 'requests', 'Pillow', 'scipy'))"
+          Rscript -e "reticulate::py_install(c('h5py', 'pyyaml', 'requests', 'Pillow', 'scipy'), pip = TRUE)"
 
       - name: Check
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
