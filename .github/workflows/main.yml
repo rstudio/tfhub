@@ -49,7 +49,7 @@ jobs:
 
       - name: Install TensorFlow
         run: |
-          Rscript -e "reticulate::install_miniconda(ifelse(Sys.info()['sysname'] == 'Windows', 'C:/Anaconda3/', reticulate::miniconda_path()))"
+          Rscript -e "reticulate::install_miniconda()"
           Rscript -e "remotes::install_local()"
           Rscript -e "reticulate::conda_create('r-reticulate', packages = 'python==3.6.9')"
           Rscript -e "tensorflow::install_tensorflow(version = Sys.getenv('TF_VERSION'))"
