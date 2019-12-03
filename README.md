@@ -2,7 +2,6 @@
 
 <!-- badges: start -->
 [![Actions Status](https://github.com/rstudio/tfhub/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/tfhub/actions)
-
 <!-- badges: end -->
 
 The tfhub package provides R wrappers to [TensorFlow Hub](https://www.tensorflow.org/hub).
