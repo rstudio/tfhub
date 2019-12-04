@@ -44,3 +44,9 @@ Remotes:
     rstudio/tensorflow,
     rstudio/keras
 VignetteBuilder: knitr
+reticulate@R:   
+  list(
+    packages = list(
+      list(package = "tensorflow_hub", pip = TRUE)
+    )
+  )
