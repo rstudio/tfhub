@@ -41,10 +41,6 @@ Suggests:
     fs,
     pins,
     magick
-Remotes:
-    rstudio/reticulate,
-    rstudio/tensorflow,
-    rstudio/keras
 VignetteBuilder: knitr
 reticulate@R:   
   list(
