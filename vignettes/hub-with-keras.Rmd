@@ -19,7 +19,7 @@ menu:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>", 
-  eval = TRUE
+  eval = identical(Sys.getenv("EVAL_VIGNETTE", "false"), "true") ||identical(Sys.getenv("CI"), "true") 
 )
 ```
 
