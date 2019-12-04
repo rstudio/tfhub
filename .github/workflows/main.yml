@@ -52,6 +52,7 @@ jobs:
 
       - name: Install TensorFlow
         run: |
+          Rscript -e "remotes::install_github('rstudio/reticulate')"
           Rscript -e "reticulate::install_miniconda()"
           Rscript -e "remotes::install_local()"
           Rscript -e "reticulate::conda_create('r-reticulate', packages = 'python==3.6.9')"
