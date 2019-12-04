@@ -10,9 +10,9 @@ Authors@R: c(
   person("RStudio", role = c("cph", "fnd")),  
   person(family = "Google Inc.", role = c("cph"))
   )
-Description: TensorFlow Hub is a library for the publication, discovery, and
+Description: 'TensorFlow' Hub is a library for the publication, discovery, and
     consumption of reusable parts of machine learning models. A module is a 
-    self-contained piece of a TensorFlow graph, along with its weights and 
+    self-contained piece of a 'TensorFlow' graph, along with its weights and 
     assets, that can be reused across different tasks in a process known as
     transfer learning. Transfer learning train a model with a smaller dataset,
     improve generalization, and speed up training.
