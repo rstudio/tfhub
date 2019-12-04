@@ -3,7 +3,9 @@ Type: Package
 Title: Interface to 'TensorFlow' Hub
 Version: 0.7.0
 Authors@R: c(
-  person("JJ", "Allaire", role = c("aut", "cre"),
+  person("Daniel", "Falbel", role = c("aut", "cre"),
+         email = "daniel@rstudio.com"),
+  person("JJ", "Allaire", role = c("aut"),
          email = "jj@rstudio.com"),
   person("RStudio", role = c("cph", "fnd")),  
   person(family = "Google Inc.", role = c("cph"))
