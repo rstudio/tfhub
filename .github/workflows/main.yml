@@ -58,6 +58,6 @@ jobs:
           Rscript -e "reticulate::py_install(c('h5py', 'pyyaml', 'requests', 'Pillow', 'scipy'), pip = TRUE)"
 
       - name: Check
-        continue-on-error: matrix.config.allow_failure
+        continue-on-error: ${{ matrix.config.allow_failure }}
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
 
