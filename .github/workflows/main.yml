@@ -22,7 +22,7 @@ jobs:
       TF_VERSION: ${{ matrix.config.tf }}
       TFHUB_VERSION: ${{ matrix.config.tfhub }}
       PIP_NO_WARN_SCRIPT_LOCATION: false
-      RETICULATE_AUTOCONFIGURE: FALSE
+      RETICULATE_AUTOCONFIGURE: 'FALSE'
       CRAN: ${{ matrix.config.cran }}
 
     steps:
@@ -46,9 +46,9 @@ jobs:
 
       - name: Install TensorFlow
         run: |
+          Rscript -e "remotes::install_local()"
           Rscript -e "remotes::install_github('rstudio/reticulate')"
           Rscript -e "reticulate::install_miniconda()"
-          Rscript -e "remotes::install_local()"
           Rscript -e "reticulate::conda_create('r-reticulate', packages = 'python==3.6.9')"
           Rscript -e "tensorflow::install_tensorflow(version = Sys.getenv('TF_VERSION'))"
           Rscript -e "tfhub::install_tfhub(version = Sys.getenv('TFHUB_VERSION'))"
