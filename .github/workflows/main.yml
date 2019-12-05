@@ -22,6 +22,7 @@ jobs:
       TF_VERSION: ${{ matrix.config.tf }}
       TFHUB_VERSION: ${{ matrix.config.tfhub }}
       PIP_NO_WARN_SCRIPT_LOCATION: false
+      RETICULATE_AUTOCONFIGURE: FALSE
       CRAN: ${{ matrix.config.cran }}
 
     steps:
