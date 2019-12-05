@@ -16,3 +16,4 @@
 ^.*train\.zip$
 ^.*train\.csv$
 ^\.github.*$
+^cran-comments\.md$
