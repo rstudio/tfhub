@@ -63,14 +63,7 @@ hub_sparse_text_embedding_column <- function(key, module_spec, combiner,
 #'
 #' @details
 #' This feature column can be used on images, represented as float32 tensors of RGB pixel
-#' data in the range [0,1]. This can be read from a
-#' \href{column_numeric()}{https://tensorflow.rstudio.com/tfestimators/reference/column_numeric.html}
-#' if the input data happens to have decoded images, all with the same shape [height,
-#' width, 3]. More commonly, the
-#' \href{input_fn}{https://tensorflow.rstudio.com/tfestimators/articles/input_functions.html}
-#' will have code to explicitly decode images, resize them (possibly after performing data
-#' augmentation such as random crops etc.), and provide a batch of shape [batch_size,
-#' height, width, 3].
+#' data in the range [0,1].
 #'
 #' @export
 hub_image_embedding_column <- function(key, module_spec) {

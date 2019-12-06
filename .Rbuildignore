@@ -11,3 +11,9 @@
 ^.*train.csv.zip
 ^doc$
 ^Meta$
+^.*flower_photos.*$
+^.*train_images.*$
+^.*train\.zip$
+^.*train\.csv$
+^\.github.*$
+^cran-comments\.md$

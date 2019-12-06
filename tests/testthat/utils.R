@@ -6,6 +6,9 @@ skip_if_no_tfhub <- function(required_version = NULL) {
 }
 
 skip_if_no_tf_version <- function(required_version) {
+  if (!reticulate::py_module_available("tensorflow"))
+    skip("TensorFlow is not available.")
+
   if (tensorflow::tf_version() < required_version)
     skip(paste0("Needs TF version >= ", required_version))
 }

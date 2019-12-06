@@ -1,6 +1,4 @@
 source("utils.R")
-library(keras)
-
 
 test_succeeds("layer_hub works with sequential models", {
 
