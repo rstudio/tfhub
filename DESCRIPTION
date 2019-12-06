@@ -42,9 +42,10 @@ Suggests:
     pins,
     magick
 VignetteBuilder: knitr
-reticulate@R:   
+Config/reticulate:   
   list(
     packages = list(
+      list(package = "tensorflow", pip = TRUE),
       list(package = "tensorflow_hub", pip = TRUE)
     )
   )
