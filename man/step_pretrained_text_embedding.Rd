@@ -2,7 +2,7 @@
 % Please edit documentation in R/recipe.R
 \name{step_pretrained_text_embedding}
 \alias{step_pretrained_text_embedding}
-\title{Pretrained text-emebeddings}
+\title{Pretrained text-embeddings}
 \usage{
 step_pretrained_text_embedding(
   recipe,
@@ -43,4 +43,20 @@ the computations for subsequent operations}
 `step_pretrained_text_embedding` creates a *specification* of a
  recipe step that will transform text data into its numerical
  transformation based on a pretrained model.
+}
+\examples{
+
+\dontrun{
+library(tibble)
+library(recipes)
+df <- tibble(text = c('hi', "heello", "goodbye"), y = 0)
+
+rec <- recipe(y ~ text, df)
+rec <- rec \%>\% step_pretrained_text_embedding(
+ text,
+ handle = "https://tfhub.dev/google/tf2-preview/gnews-swivel-20dim-with-oov/1"
+)
+
+}
+
 }

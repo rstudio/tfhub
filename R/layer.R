@@ -31,6 +31,21 @@
 #'   this layer.
 #' @param ... Other arguments that are passed to the TensorFlow Hub module.
 #'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' library(keras)
+#'
+#' model <- keras_model_sequential() %>%
+#'  layer_hub(
+#'    handle = "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4",
+#'    input_shape = c(224, 224, 3)
+#'  ) %>%
+#'  layer_dense(1)
+#'
+#' }
+#'
 #' @export
 layer_hub <- function(object, handle, trainable = FALSE, arguments = NULL, ...) {
   keras::create_layer(

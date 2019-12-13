@@ -32,3 +32,12 @@ a local directory (e.g. /usr/local/mymodule) or a Google Cloud Storage bucket
 (gs://mymodule). 3) A URL pointing to a TGZ archive of a module, e.g.
 https://example.com/mymodule.tar.gz.
 }
+\examples{
+
+\dontrun{
+
+model <- hub_load('https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4')
+
+}
+
+}
