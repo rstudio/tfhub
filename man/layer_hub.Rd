@@ -44,3 +44,19 @@ variables of this Keras Layer when the layer is trainable. regularization_losses
 a list of callables to be added as losses of this Keras Layer when the layer is
 trainable. Each one must accept zero arguments and return a scalar tensor.
 }
+\examples{
+
+\dontrun{
+
+library(keras)
+
+model <- keras_model_sequential() \%>\%
+ layer_hub(
+   handle = "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4",
+   input_shape = c(224, 224, 3)
+ ) \%>\%
+ layer_dense(1)
+
+}
+
+}

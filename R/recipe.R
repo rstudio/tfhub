@@ -1,4 +1,4 @@
-#' Pretrained text-emebeddings
+#' Pretrained text-embeddings
 #'
 #' `step_pretrained_text_embedding` creates a *specification* of a
 #'  recipe step that will transform text data into its numerical
@@ -20,6 +20,20 @@
 #' @param args other arguments passed to [hub_load()].
 #' @param id A character string that is unique to this step to identify it.
 #'
+#' @examples
+#'
+#' \dontrun{
+#' library(tibble)
+#' library(recipes)
+#' df <- tibble(text = c('hi', "heello", "goodbye"), y = 0)
+#'
+#' rec <- recipe(y ~ text, df)
+#' rec <- rec %>% step_pretrained_text_embedding(
+#'  text,
+#'  handle = "https://tfhub.dev/google/tf2-preview/gnews-swivel-20dim-with-oov/1"
+#' )
+#'
+#' }
 #'
 #' @export
 step_pretrained_text_embedding <- function(

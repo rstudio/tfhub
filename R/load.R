@@ -22,6 +22,14 @@
 #' @param tags A set of strings specifying the graph variant to use, if loading
 #'   from a v1 module.
 #'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' model <- hub_load('https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4')
+#'
+#' }
+#'
 #' @export
 hub_load <- function(handle, tags = NULL) {
   tfhub$load(handle, tags)
