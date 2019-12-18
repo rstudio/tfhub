@@ -1,7 +1,7 @@
 Package: tfhub
 Type: Package
 Title: Interface to 'TensorFlow' Hub
-Version: 0.7.0
+Version: 0.7.0.9000
 Authors@R: c(
   person("Daniel", "Falbel", role = c("aut", "cre"),
          email = "daniel@rstudio.com"),
