@@ -17,8 +17,8 @@ Description: 'TensorFlow' Hub is a library for the publication, discovery, and
     transfer learning. Transfer learning train a model with a smaller dataset,
     improve generalization, and speed up training.
 License: Apache License 2.0
-URL: https://github.com/rstudio/tfdatasets
-BugReports: https://github.com/rstudio/tfdatasets/issues
+URL: https://github.com/rstudio/tfhub
+BugReports: https://github.com/rstudio/tfhub/issues
 SystemRequirements: TensorFlow >= 2.0 (https://www.tensorflow.org/)
 Encoding: UTF-8
 LazyData: true
