@@ -11,7 +11,7 @@ test_succeeds("layer_hub works with sequential models", {
       ) %>%
     layer_dense(1)
 
-  a <- tf$constant(array(0, dim = c(1, 224, 224, 3)), dtype = "float32")
+  a <- tf$constant(array(0, dim = as.integer(c(1, 224, 224, 3))), dtype = "float32")
 
   res <- as.numeric(model(a))
 

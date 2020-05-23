@@ -48,14 +48,29 @@
 #'
 #' @export
 layer_hub <- function(object, handle, trainable = FALSE, arguments = NULL, ...) {
+
+  args <- list(...)
+
+  if (!is.null(args$input_shape))
+    args$input_shape <- lapply(args$input_shape, as_nullable_integer)
+
   keras::create_layer(
     tfhub$KerasLayer,
     object,
-    list(
-      handle = handle,
-      trainable = trainable,
-      arguments = arguments,
-      ...
+    append(
+      list(
+        handle = handle,
+        trainable = trainable,
+        arguments = arguments
+      ),
+      args
     )
   )
+}
+
+as_nullable_integer <- function(x) {
+  if (is.null(x))
+    x
+  else
+    as.integer(x)
 }
