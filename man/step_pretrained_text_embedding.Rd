@@ -58,5 +58,4 @@ rec <- rec \%>\% step_pretrained_text_embedding(
 )
 
 }
-
 }

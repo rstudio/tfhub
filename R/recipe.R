@@ -34,7 +34,7 @@
 #' )
 #'
 #' }
-#'
+#' @importFrom recipes prep
 #' @export
 step_pretrained_text_embedding <- function(
   recipe, ...,
@@ -125,6 +125,7 @@ get_embedding <- function(column, module) {
 #'
 #' @inheritParams step_pretrained_text_embedding
 #'
+#' @importFrom recipes bake
 #' @export
 bake.step_pretrained_text_embedding <- function(object, new_data, ...) {
 

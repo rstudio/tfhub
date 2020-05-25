@@ -120,7 +120,7 @@ You can find a working example [here](https://github.com/rstudio/tfhub/tree/mast
 
 tfhub adds a `step_pretrained_text_embedding` that can be used with the [recipes](https://github.com/tidymodels/recipes) package.
 
-An example can be found [here](https://github.com/rstudio/tfhub/tree/master/vignettes/examples/recipes.R).
+An example can be found [here](https://github.com/rstudio/tfhub/blob/master/vignettes/examples/recipes.R).
 
 ## tfhub.dev
 
