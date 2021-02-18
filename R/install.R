@@ -9,7 +9,7 @@
 #'  only occur within RStudio).
 #'
 #' @export
-install_tfhub <- function(version = "0.7.0", ..., restart_session = TRUE) {
+install_tfhub <- function(version = "0.11.0", ..., restart_session = TRUE) {
 
   if (version == "nightly")
     module_string <- "tf-hub-nightly"

@@ -4,7 +4,7 @@
 \alias{prep.step_pretrained_text_embedding}
 \title{Prep method for step_pretrained_text_embedding}
 \usage{
-prep.step_pretrained_text_embedding(x, training, info = NULL, ...)
+\method{prep}{step_pretrained_text_embedding}(x, training, info = NULL, ...)
 }
 \arguments{
 \item{x}{object}
