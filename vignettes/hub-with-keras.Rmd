@@ -34,7 +34,6 @@ knitr::opts_chunk$set(
 ```{r}
 library(keras)
 library(tfhub)
-library(magick)
 ```
 
 ## An ImageNet classifier
@@ -64,11 +63,15 @@ model <- keras_model(input, output)
 Download a single image to try the model on.
 
 ```{r}
-img <- image_read('https://storage.googleapis.com/download.tensorflow.org/example_images/grace_hopper.jpg') %>%
-  image_resize(geometry = "224x224x3!") %>% 
-  image_data() %>% 
-  as.numeric() %>% 
-  abind::abind(along = 0) # expand to batch dimension
+tmp <- tempfile(fileext = ".jpg")
+download.file(
+  'https://storage.googleapis.com/download.tensorflow.org/example_images/grace_hopper.jpg',
+  tmp
+)
+img <- image_load(tmp, target_size = c(224, 224)) %>% 
+  image_to_array() %>% 
+  abind::abind(along = 0)
+img[] <- img/255
 ```
 
 ```{r, echo=FALSE}

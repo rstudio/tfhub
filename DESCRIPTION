@@ -40,8 +40,7 @@ Suggests:
     tibble,
     abind,
     fs,
-    pins,
-    magick
+    pins
 VignetteBuilder: knitr
 Config/reticulate:   
   list(
