@@ -4,7 +4,7 @@
 \alias{bake.step_pretrained_text_embedding}
 \title{Bake method for step_pretrained_text_embedding}
 \usage{
-\method{bake}{step_pretrained_text_embedding}(object, new_data, ...)
+bake.step_pretrained_text_embedding(object, new_data, ...)
 }
 \arguments{
 \item{object}{object}

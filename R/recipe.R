@@ -85,7 +85,7 @@ step_pretrained_text_embedding_new <- function(terms, role, trained, vars,
 #' @param training wether or not it's training
 #'
 #' @inheritParams step_pretrained_text_embedding
-#'
+#' @export
 prep.step_pretrained_text_embedding <- function(x, training, info = NULL, ...) {
   col_names <- recipes::terms_select(terms = x$terms, info = info)
 
@@ -123,7 +123,7 @@ get_embedding <- function(column, module) {
 #' @param new_data new data to apply transformations
 #'
 #' @inheritParams step_pretrained_text_embedding
-#'
+#' @export
 bake.step_pretrained_text_embedding <- function(object, new_data, ...) {
 
   module <- do.call(hub_load, append(list(handle = object$handle), object$args))
