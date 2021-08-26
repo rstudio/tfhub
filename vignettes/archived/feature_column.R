@@ -9,6 +9,20 @@
 #'
 #'
 
+# Notes about why this was archived: https://github.com/rstudio/tfdatasets/issues/81
+#
+# Snippets to download the data if we want to restore this example:
+#
+# pip install kaggle
+# login to kaggle.com, download API 'kaggle.json' file
+# mkdir ~/.kaggle
+# mv ~/kaggle.json ~/.kaggle/
+# chmod 600 ~/.kaggle/kaggle.json
+# kaggle competitions download -c petfinder-adoption-prediction
+
+# unzip("petfinder-adoption-prediction.zip", exdir = "petfinder")
+
+
 library(keras)
 library(tfhub)
 library(tfdatasets)
@@ -19,9 +33,9 @@ tf$compat$v1$disable_eager_execution()
 
 # Read data ---------------------------------------------------------------
 
-dataset <- read_csv("train.csv") %>%
+dataset <- read_csv("petfinder/train/train.csv") %>%
   filter(PhotoAmt > 0) %>%
-  mutate(img_path = path.expand(paste0("train_images/", PetID, "-1.jpg"))) %>%
+  mutate(img_path = path.expand(paste0("petfinder/train_images/", PetID, "-1.jpg"))) %>%
   mutate_at(vars(Breed1:Health, State), as.character) %>%
   sample_n(size = nrow(.)) # shuffle
 
@@ -55,6 +69,14 @@ spec <- dataset_train %>%
     img,
     module_spec = "https://tfhub.dev/google/imagenet/resnet_v2_50/feature_vector/3"
   ) %>%
+  # step_pretrained_text_embedding(
+  #   Description,
+  #   handle = "https://tfhub.dev/google/universal-sentence-encoder/2"
+  #   ) %>%
+  # step_pretrained_text_embedding(
+  #   img,
+  #   handle = "https://tfhub.dev/google/imagenet/resnet_v2_50/feature_vector/3"
+  # ) %>%
   step_numeric_column(Age, Fee, Quantity, normalizer_fn = scaler_standard()) %>%
   step_categorical_column_with_vocabulary_list(
     has_type("string"), -Description, -RescuerID, -img_path, -PetID, -Name
