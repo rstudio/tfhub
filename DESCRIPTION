@@ -45,7 +45,6 @@ VignetteBuilder: knitr
 Config/reticulate: 
   list(
     packages = list(
-      list(package = "tensorflow", pip = TRUE),
       list(package = "tensorflow_hub", pip = TRUE)
     )
   )

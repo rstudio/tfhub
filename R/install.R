@@ -9,10 +9,12 @@
 #'  only occur within RStudio).
 #'
 #' @export
-install_tfhub <- function(version = "0.11.0", ..., restart_session = TRUE) {
+install_tfhub <- function(version = NULL, ..., restart_session = TRUE) {
 
   if (version == "nightly")
     module_string <- "tf-hub-nightly"
+  else if (is.null(version))
+    module_string <- "tensorflow_hub"
   else
     module_string <- paste0("tensorflow_hub==", version)
 
