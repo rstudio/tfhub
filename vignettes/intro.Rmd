@@ -16,7 +16,7 @@ menu:
 alias:
   - /guide/tfhub
 ---
-    
+
 The tfhub package provides R wrappers to [TensorFlow Hub](https://www.tensorflow.org/hub).
 
 [TensorFlow Hub](https://www.tensorflow.org/hub) is a library for reusable machine learning modules.
@@ -42,7 +42,7 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("rstudio/tfhub")
 ```
 
-After installing the tfhub package you need to install the TensorFlow Hub python 
+After installing the tfhub package you need to install the TensorFlow Hub python
 module:
 
 ``` r
@@ -114,18 +114,16 @@ tfhub can also be used with tfdatasets since it provides implementations of `fea
 * `hub_sparse_text_embedding_column()`
 * `hub_image_embedding_column()`
 
-You can find a working example [here](https://github.com/rstudio/tfhub/tree/master/vignettes/examples/feature_column.R).
+You can find a working example [here](https://github.com/rstudio/tfhub/tree/main/vignettes/examples/feature_column.R).
 
 ## Using with `recipes`
 
 tfhub adds a `step_pretrained_text_embedding` that can be used with the [recipes](https://github.com/tidymodels/recipes) package.
 
-An example can be found [here](https://github.com/rstudio/tfhub/tree/master/vignettes/examples/recipes.R).
+An example can be found [here](https://github.com/rstudio/tfhub/tree/main/vignettes/examples/recipes.R).
 
 ## tfhub.dev
 
 [tfhub.dev](https://tfhub.dev) is a gallery of pre-trained model ready to be used with TensorFlow Hub.
 
 ![](https://user-images.githubusercontent.com/4706822/63043426-9842ba00-bea2-11e9-9ce2-a4d219de1fa7.png)
-
-

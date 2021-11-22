@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
   schedule:
     - cron: '0 1 * * *'
@@ -39,9 +39,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-r@v1
 
-      - uses: r-lib/actions/setup-pandoc@master
+      - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
@@ -71,4 +71,3 @@ jobs:
       - name: Check
         continue-on-error: ${{ matrix.config.allow_failure }}
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
-

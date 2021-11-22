@@ -8,7 +8,7 @@ menu:
 ---
 
 <div class="source-ref">
-<span class="caption">Source: </span>`r sprintf("https://github.com/rstudio/tfhub/blob/master/vignettes/examples/%s.R", rmarkdown::metadata$title)`
+<span class="caption">Source: </span>`r sprintf("https://github.com/rstudio/tfhub/blob/main/vignettes/examples/%s.R", rmarkdown::metadata$title)`
 </div>
 
 ```{r, echo = FALSE}
