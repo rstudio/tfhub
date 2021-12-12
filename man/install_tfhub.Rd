@@ -4,7 +4,7 @@
 \alias{install_tfhub}
 \title{Install TensorFlow Hub}
 \usage{
-install_tfhub(version = "0.11.0", ..., restart_session = TRUE)
+install_tfhub(version = NULL, ..., restart_session = TRUE)
 }
 \arguments{
 \item{version}{version of TensorFlow Hub to be installed.}
