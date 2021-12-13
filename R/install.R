@@ -13,7 +13,7 @@ install_tfhub <- function(version = "release", ..., restart_session = TRUE) {
 
   if (version == "nightly")
     module_string <- "tf-hub-nightly"
-  else if (is.null(version) || version %in% c("release", "nightly"))
+  else if (is.null(version) || version %in% c("release", "default", ""))
     module_string <- "tensorflow_hub"
   else
     module_string <- paste0("tensorflow_hub==", version)

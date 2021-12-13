@@ -11,18 +11,18 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
+    runs-on: ${{ matrix.os }}
 
-    name: ${{ matrix.config.os }} (TF ${{ matrix.config.tf }}) (TFHUB ${{ matrix.config.tfhub }})
+    name: ${{ matrix.os }} (TF ${{ matrix.tf }}) (TFHUB ${{ matrix.tfhub }})
 
     strategy:
       fail-fast: false
       matrix:
-        config:
-        - { os: windows-latest, tf: 'release', tfhub: 'release', r: 'release'}
-        - { os: macOS-latest  , tf: 'release', tfhub: 'release', r: 'release'}
-        - { os: ubuntu-latest , tf: 'release', tfhub: 'release', r: 'release'}
-        - { os: ubuntu-latest , tf: 'nightly', tfhub: 'release', r: 'release', allow_failure: true}
+        include:
+          - { os: windows-latest, tf: 'release', tfhub: 'release', r: 'release'}
+          - { os: macOS-latest  , tf: 'release', tfhub: 'release', r: 'release'}
+          - { os: ubuntu-latest , tf: 'release', tfhub: 'release', r: 'release'}
+          - { os: ubuntu-latest , tf: 'nightly', tfhub: 'release', r: 'release', allow_failure: true}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: 'true'
@@ -47,7 +47,7 @@ jobs:
       - name: Install dev r-tensorflow
         run: Rscript -e 'remotes::install_github("rstudio/tensorflow")'
 
-      - name: Install miniconda
+      - name: Install Miniconda
         run: Rscript -e 'reticulate::install_miniconda()'
 
       - name: Install Tensorflow
@@ -60,5 +60,5 @@ jobs:
         run: Rscript -e 'tfhub::install_tfhub("${{ matrix.tfhub }}")'
 
       - name: Check
-        continue-on-error: ${{ matrix.config.allow_failure }}
+        continue-on-error: ${{ matrix.allow_failure }}
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
