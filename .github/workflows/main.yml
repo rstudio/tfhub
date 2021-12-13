@@ -51,7 +51,7 @@ jobs:
         run: Rscript -e 'reticulate::install_miniconda()'
 
       - name: Install Tensorflow
-        run: Rscript -e 'tensorflow::install_tensorflow(version = "${{ matrix.tf }}")'
+        run: Rscript -e 'tensorflow::install_tensorflow(version = "${{ matrix.tf }}-cpu", extra_packages = c("Pillow"))'
 
       - name: Install tfhub r-pkg
         run: Rscript -e "remotes::install_local()"
