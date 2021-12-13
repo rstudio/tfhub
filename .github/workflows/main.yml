@@ -19,10 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, tf: 'default', tfhub: 'NULL', r: 'release'}
-        - { os: macOS-latest  , tf: 'default', tfhub: 'NULL', r: 'release'}
-        - { os: ubuntu-latest , tf: 'default', tfhub: 'NULL', r: 'release'}
-        - { os: ubuntu-latest , tf: 'nightly', tfhub: 'NULL', r: 'release', allow_failure: true}
+        - { os: windows-latest, tf: 'release', tfhub: 'release', r: 'release'}
+        - { os: macOS-latest  , tf: 'release', tfhub: 'release', r: 'release'}
+        - { os: ubuntu-latest , tf: 'release', tfhub: 'release', r: 'release'}
+        - { os: ubuntu-latest , tf: 'nightly', tfhub: 'release', r: 'release', allow_failure: true}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: 'true'
@@ -50,11 +50,14 @@ jobs:
       - name: Install miniconda
         run: Rscript -e 'reticulate::install_miniconda()'
 
+      - name: Install Tensorflow
+        run: Rscript -e 'tensorflow::install_tensorflow(version = "${{ matrix.tf }}")'
+
       - name: Install tfhub r-pkg
         run: Rscript -e "remotes::install_local()"
 
       - name: Install tfhub py module
-        run: Rscript -e 'tfhub::install_tfhub(${{ matrix.tfhub }})'
+        run: Rscript -e 'tfhub::install_tfhub("${{ matrix.tfhub }}")'
 
       - name: Check
         continue-on-error: ${{ matrix.config.allow_failure }}
