@@ -45,13 +45,14 @@ jobs:
           extra-packages: rcmdcheck remotes
 
       - name: Install dev r-tensorflow
-        run: Rscript -e 'remotes::install_github("rstudio/tensorflow")'
+        run: Rscript -e 'remotes::install_github(paste0("rstudio/", c("tensorflow", "keras")))'
 
       - name: Install Miniconda
         run: Rscript -e 'reticulate::install_miniconda()'
 
       - name: Install Tensorflow
-        run: Rscript -e 'tensorflow::install_tensorflow(version = "${{ matrix.tf }}-cpu", extra_packages = c("Pillow"))'
+        # run: Rscript -e 'keras::install_keras(version = "${{ matrix.tf }}-cpu")'
+        run: Rscript -e 'tensorflow::install_tensorflow(version = "${{ matrix.tf }}-cpu", extra_packages = c("Pillow", "scipy"))'
 
       - name: Install tfhub r-pkg
         run: Rscript -e "remotes::install_local()"
