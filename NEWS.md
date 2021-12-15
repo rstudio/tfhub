@@ -1,4 +1,4 @@
-# tfhub (development version)
+# tfhub 0.8.1
 
 - `install_tfhub()` now defaults to the release version of tensorflow_hub.
 - Removed {pins} dependency
