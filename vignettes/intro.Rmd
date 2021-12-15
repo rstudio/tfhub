@@ -108,19 +108,18 @@ model %>%
 
 ## Using with tfdatasets
 
-tfhub can also be used with tfdatasets since it provides implementations of `feature_columns`:
+tfhub can also be used with tfdatasets:
 
 * `hub_text_embedding_column()`
 * `hub_sparse_text_embedding_column()`
 * `hub_image_embedding_column()`
 
-You can find a working example [here](https://github.com/rstudio/tfhub/tree/main/vignettes/examples/feature_column.R).
 
 ## Using with `recipes`
 
 tfhub adds a `step_pretrained_text_embedding` that can be used with the [recipes](https://github.com/tidymodels/recipes) package.
 
-An example can be found [here](https://github.com/rstudio/tfhub/tree/main/vignettes/examples/recipes.R).
+An example can be found [here](https://github.com/rstudio/tfhub/blob/main/vignettes/examples/recipes.R).
 
 ## tfhub.dev
 

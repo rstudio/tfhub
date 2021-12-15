@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-[TensorFlow Hub](http://tensorflow.org/hub) is a way to share pretrained model components. See the TensorFlow Module Hub for a searchable listing of pre-trained models. This tutorial demonstrates:
+[TensorFlow Hub](https://www.tensorflow.org/hub) is a way to share pretrained model components. See the TensorFlow Module Hub for a searchable listing of pre-trained models. This tutorial demonstrates:
 
 1. How to use TensorFlow Hub with Keras.
 2. How to do image classification using TensorFlow Hub.
