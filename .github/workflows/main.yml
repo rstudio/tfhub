@@ -1,3 +1,6 @@
+
+name: R-CMD-check
+
 on:
   push:
     branches:
@@ -7,7 +10,10 @@ on:
     - cron: '0 1 * * *'
 
 
-name: R-CMD-check
+defaults:
+  run:
+    shell: Rscript {0}
+
 
 jobs:
   R-CMD-check:
@@ -45,21 +51,24 @@ jobs:
           extra-packages: rcmdcheck remotes
 
       - name: Install dev r-tensorflow
-        run: Rscript -e 'remotes::install_github(paste0("rstudio/", c("tensorflow", "keras")))'
+        run: remotes::install_github(paste0("rstudio/", c("tensorflow", "keras")))
 
       - name: Install Miniconda
-        run: Rscript -e 'reticulate::install_miniconda()'
+        run: reticulate::install_miniconda()
 
       - name: Install Tensorflow
         # run: Rscript -e 'keras::install_keras(version = "${{ matrix.tf }}-cpu")'
-        run: Rscript -e 'tensorflow::install_tensorflow(version = "${{ matrix.tf }}-cpu", extra_packages = c("Pillow", "scipy"))'
+        run: |
+          tensorflow::install_tensorflow(
+            version = "${{ matrix.tf }}-cpu",
+            extra_packages = c("Pillow", "scipy"))
 
       - name: Install tfhub r-pkg
-        run: Rscript -e "remotes::install_local()"
+        run: remotes::install_local()
 
       - name: Install tfhub py module
-        run: Rscript -e 'tfhub::install_tfhub("${{ matrix.tfhub }}")'
+        run: tfhub::install_tfhub("${{ matrix.tfhub }}")
 
       - name: Check
         continue-on-error: ${{ matrix.allow_failure }}
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
+        run: rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')
