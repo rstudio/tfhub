@@ -42,7 +42,6 @@ Suggests:
     tibble,
     abind,
     fs,
-    pins
 VignetteBuilder: knitr
 Config/reticulate: 
   list(
