@@ -5,6 +5,10 @@
 #' can be downlaoded here: https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data
 #'
 
+# - Accept the usage terms here:
+#   : https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data
+# - kaggle competitions download -c jigsaw-toxic-comment-classification-challenge
+# - unzip jigsaw-toxic-comment-classification-challenge.zip
 library(keras)
 library(tfhub)
 library(readr)
@@ -56,10 +60,3 @@ model %>%
 
 model %>%
   evaluate(x = test$comment_text, y = as.matrix(test[,-c(1,2)]))
-
-# Calculating the AUC for each class
-purrr::map2_dbl(
-  as.data.frame(actual),
-  as.data.frame(preds),
-  Metrics::auc
-)
