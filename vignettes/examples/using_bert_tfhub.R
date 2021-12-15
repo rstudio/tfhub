@@ -10,7 +10,6 @@
 library(keras)
 library(tfhub)
 library(readr)
-library(pins)
 
 
 # Read data ---------------------------------------------------------------

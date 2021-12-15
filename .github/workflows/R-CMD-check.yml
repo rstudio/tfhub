@@ -1,0 +1,74 @@
+
+name: R-CMD-check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: '0 1 * * *'
+
+
+defaults:
+  run:
+    shell: Rscript {0}
+
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} (TF ${{ matrix.tf }}) (TFHUB ${{ matrix.tfhub }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, tf: 'release', tfhub: 'release', r: 'release'}
+          - { os: macOS-latest  , tf: 'release', tfhub: 'release', r: 'release'}
+          - { os: ubuntu-latest , tf: 'release', tfhub: 'release', r: 'release'}
+          - { os: ubuntu-latest , tf: 'nightly', tfhub: 'release', r: 'release', allow_failure: true}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: 'true'
+      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.r }}
+          use-public-rspm: true
+          Ncpus: '2'
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: rcmdcheck remotes
+
+      - name: Install dev r-tensorflow
+        run: remotes::install_github(paste0("rstudio/", c("tensorflow", "keras")))
+
+      - name: Install Miniconda
+        run: reticulate::install_miniconda()
+
+      - name: Install Tensorflow
+        # run: Rscript -e 'keras::install_keras(version = "${{ matrix.tf }}-cpu")'
+        run: |
+          tensorflow::install_tensorflow(
+            version = "${{ matrix.tf }}-cpu",
+            extra_packages = c("Pillow", "scipy"))
+
+      - name: Install tfhub r-pkg
+        run: remotes::install_local()
+
+      - name: Install tfhub py module
+        run: tfhub::install_tfhub("${{ matrix.tfhub }}")
+
+      - name: Check
+        continue-on-error: ${{ matrix.allow_failure }}
+        run: rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')
