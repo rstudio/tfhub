@@ -18,3 +18,4 @@
 ^\.github.*$
 ^cran-comments\.md$
 ^.*\.zip$
+^CRAN-SUBMISSION$
