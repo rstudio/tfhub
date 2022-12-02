@@ -144,4 +144,11 @@ bake.step_pretrained_text_embedding <- function(object, new_data, ...) {
   out
 }
 
+#' @importFrom generics required_pkgs
+#' @export
+generics::required_pkgs
 
+#' @export
+required_pkgs.step_pretrained_text_embedding <- function(x, ...) {
+  c("tfhub", "tensorflow")
+}
